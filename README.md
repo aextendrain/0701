@@ -29,7 +29,11 @@ index.html
 
 ## GitHub Pages 部署
 
-本專案已包含 GitHub Pages Actions workflow。推送到 GitHub `main` 分支後，GitHub Actions 會自動部署靜態網站。
+本專案是純靜態網站。GitHub Pages 建議設定為：
+
+- Source: Deploy from a branch
+- Branch: main
+- Folder: /root
 
 ## 使用流程
 
