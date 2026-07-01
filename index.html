@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>室內設計推理 Prompt Generator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="input-panel">
+        <div class="brand">
+          <p class="eyebrow">Design Reasoning Prompt Generator</p>
+          <h1>室內設計推理 Prompt Generator</h1>
+          <p>
+            以「設計」為中心，將現場條件、概念、風格與圖面正確性轉成可交給其他 AI 的高品質生成提示詞。
+          </p>
+        </div>
+
+        <div class="card">
+          <h2>1. 專案資料</h2>
+          <label>
+            案件名稱
+            <input id="projectName" value="學務處改造" />
+          </label>
+          <label>
+            空間類型
+            <select id="spaceType">
+              <option>住宅｜小宅</option>
+              <option>住宅｜家庭宅</option>
+              <option>住宅｜老屋翻新</option>
+              <option>住宅｜豪宅 / 高端住宅</option>
+              <option>辦公｜接待大廳</option>
+              <option>辦公｜開放辦公區</option>
+              <option selected>教育｜校園行政空間</option>
+              <option>教育｜圖書館 / 閱讀空間</option>
+              <option>商業｜品牌門市</option>
+              <option>商業｜展示空間</option>
+              <option>餐飲｜咖啡廳</option>
+              <option>餐飲｜餐廳</option>
+              <option>旅宿｜大廳 / 公共區</option>
+              <option>醫療｜候診空間</option>
+              <option>公共｜社區中心</option>
+              <option>公共藝術 / 裝置</option>
+            </select>
+          </label>
+          <label>
+            面積 / 坪數 / 尺度
+            <input id="area" value="約 32 坪" />
+          </label>
+          <label>
+            圖面比例 / 已知尺度
+            <input id="drawingScale" value="平面圖 1/100；若未提供尺寸，所有尺寸需標為待確認" />
+          </label>
+        </div>
+
+        <div class="card">
+          <h2>2. 現場與需求</h2>
+          <label>
+            現場條件
+            <textarea id="siteCondition" rows="4">校園行政空間，入口與走廊交界明顯，現場具備既有牆面、展示資訊、玻璃界面與等候需求。</textarea>
+          </label>
+          <label>
+            現場問題 / 矛盾
+            <textarea id="siteIssues" rows="4">入口停留性不足、學生進入時缺少心理緩衝，資訊展示零散，等候與洽詢行為缺乏清楚的空間角色。</textarea>
+          </label>
+          <label>
+            使用者 / 行為目標
+            <textarea id="behaviorGoal" rows="3">學生進入、等待、洽詢、閱讀公告、短暫停留、與行政人員互動。</textarea>
+          </label>
+        </div>
+
+        <div class="card concept-card">
+          <h2>3. 照片 / 圖面素材控管</h2>
+          <label>
+            上傳要提供給其他 AI 的照片或圖面
+            <input id="sourceFilesInput" type="file" accept="image/*,.pdf" multiple />
+          </label>
+          <p class="hint">
+            建議至少準備：現場全景、入口 / 動線、問題角落、展示或牆面、平面圖。上傳後請幫每個檔案標註用途，APP 會同步寫入 prompt。
+          </p>
+          <div id="assetList" class="asset-list"></div>
+          <label>
+            素材使用說明
+            <textarea id="assetNotes" rows="5" readonly></textarea>
+          </label>
+        </div>
+
+        <div class="card concept-card">
+          <h2>4. 核心概念</h2>
+          <label>
+            概念名稱
+            <input id="conceptTitle" value="落角於角落" />
+          </label>
+          <label>
+            概念描述
+            <textarea id="conceptText" rows="5">將原本只是通過的角落，轉化為能停留、等待、交流與辨識的柔性節點，讓學生在進入學務處前先完成心理上的轉換。</textarea>
+          </label>
+          <label>
+            情緒關鍵字
+            <input id="moodKeywords" value="安定、柔和、低噪音、包覆感、溫潤" />
+          </label>
+        </div>
+
+        <div class="card">
+          <h2>5. 設計語彙</h2>
+          <label>
+            風格方向
+            <select id="styleDirection">
+              <option selected>現代奶油風</option>
+              <option>日式無印風</option>
+              <option>侘寂自然風</option>
+              <option>北歐溫潤風</option>
+              <option>義式低奢風</option>
+              <option>現代極簡風</option>
+              <option>工業混凝土風</option>
+              <option>中古復古風</option>
+              <option>高端飯店風</option>
+              <option>校園公共空間風</option>
+              <option>品牌商業風</option>
+              <option>藝廊白盒風</option>
+              <option>自然療癒風</option>
+              <option>未來科技風</option>
+              <option>競圖敘事風</option>
+            </select>
+          </label>
+          <label>
+            材質 / 色彩 / 光線方向
+            <textarea id="materialLight" rows="5" readonly></textarea>
+          </label>
+        </div>
+
+        <div class="card">
+          <h2>6. 圖面正確性要求</h2>
+          <label>
+            必須保留的圖面條件
+            <textarea id="drawingConstraints" rows="5">不得任意更改原始平面圖的牆線、柱位、樑位、開口、樓梯、窗戶、管道間與主要結構位置。若缺少尺寸或比例，必須標註「待確認」，不得自行編造精確數字。</textarea>
+          </label>
+          <label>
+            上傳給其他 AI 時會附上的資料
+            <input id="sourceMaterials" value="現場照片、平面圖、剖面圖、參考版面、手繪草圖或基地資料" />
+          </label>
+        </div>
+
+        <div class="actions">
+          <button id="generateBtn" class="primary">生成設計 Prompt</button>
+          <button id="copyAllBtn" class="secondary">複製全部 Prompt</button>
+        </div>
+      </section>
+
+      <section class="output-panel">
+        <div class="output-header">
+          <div>
+            <p class="eyebrow">Prompt Outputs</p>
+            <h2>輸出提示詞</h2>
+          </div>
+          <p id="status">已準備好生成。</p>
+        </div>
+
+        <article class="prompt-card">
+          <div class="prompt-title">
+            <h3>00｜產圖工具專用：A1 版面生成 Prompt</h3>
+            <button class="copy-btn" data-copy="promptDirectBoard">複製</button>
+          </div>
+          <textarea id="promptDirectBoard" readonly></textarea>
+        </article>
+
+        <article class="prompt-card">
+          <div class="prompt-title">
+            <h3>01｜設計判讀 Prompt</h3>
+            <button class="copy-btn" data-copy="promptReasoning">複製</button>
+          </div>
+          <textarea id="promptReasoning" readonly></textarea>
+        </article>
+
+        <article class="prompt-card">
+          <div class="prompt-title">
+            <h3>02｜圖面正確性 Prompt</h3>
+            <button class="copy-btn" data-copy="promptAccuracy">複製</button>
+          </div>
+          <textarea id="promptAccuracy" readonly></textarea>
+        </article>
+
+        <article class="prompt-card">
+          <div class="prompt-title">
+            <h3>03｜設計手法與圖說 Prompt</h3>
+            <button class="copy-btn" data-copy="promptTactics">複製</button>
+          </div>
+          <textarea id="promptTactics" readonly></textarea>
+        </article>
+
+        <article class="prompt-card">
+          <div class="prompt-title">
+            <h3>04｜文字模型專用：修正下一版 Prompt</h3>
+            <button class="copy-btn" data-copy="promptBoard">複製</button>
+          </div>
+          <textarea id="promptBoard" readonly></textarea>
+        </article>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
