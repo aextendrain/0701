@@ -7,8 +7,10 @@ const ids = [
   "siteIssues",
   "behaviorGoal",
   "conceptTitle",
+  "conceptPreset",
   "conceptText",
   "moodKeywords",
+  "boardTone",
   "styleDirection",
   "materialLight",
   "drawingConstraints",
@@ -49,6 +51,49 @@ const stylePresets = {
   "競圖敘事風": "色彩：低彩度背景、單一強調色、清楚圖面層級。材質：依概念抽象化呈現，重視圖說與分析可讀性。光線：主視覺服務概念，圖面區保持乾淨高辨識。"
 };
 
+const conceptPresets = {
+  "回家後慢慢降速": {
+    text: "為忙碌都市生活建立一個能沉澱、放鬆與重新聚焦的居住場域。空間不追求過度裝飾，而是透過柔和光線、溫潤材質與清楚動線，讓日常生活自然變慢。",
+    moods: "安定、柔和、低噪音、包覆感、溫潤",
+  },
+  "都市避風港": {
+    text: "在高密度城市生活中建立一個能隔絕外部壓力的內在庇護所，透過柔性界面、低彩度材質與分層光線，讓居住者回到可被安放的日常。",
+    moods: "庇護、安定、低彩度、包覆、沉澱",
+  },
+  "柔和日常": {
+    text: "將日常行為轉化為柔和、連續且有秩序的生活場景，讓收納、用餐、休息與交流不再彼此干擾，而是形成自然流動的居住節奏。",
+    moods: "柔和、自然、秩序、親密、舒適",
+  },
+  "光的停留": {
+    text: "以光線作為空間組織的線索，讓入口、停留、閱讀與休息場景透過明暗層次被重新定義，形成可感知的生活節點。",
+    moods: "明暗、停留、輕盈、安靜、層次",
+  },
+  "收納成為界面": {
+    text: "將收納從單純機能轉化為空間界面，透過櫃體、展示、轉角與牆面整合，降低視覺雜訊並重新界定公共與私密的關係。",
+    moods: "整合、秩序、乾淨、界面、安定",
+  },
+  "轉角成場": {
+    text: "將原本被忽略的轉角轉化為停留、展示、交流或轉換心情的場域，使空間從通過性的動線變成有記憶點的生活節點。",
+    moods: "轉換、停留、節點、交流、柔性",
+  },
+  "家中的第二客廳": {
+    text: "在既有客餐廳之外創造一個可閱讀、休息、交談與短暫獨處的第二核心，讓家不只有主要公共區，也有更細膩的停留層次。",
+    moods: "親密、彈性、停留、閱讀、陪伴",
+  },
+  "安靜的社交核心": {
+    text: "將社交行為從喧鬧聚集轉化為安靜而舒適的共享場景，透過座位、燈光、材質與動線安排，讓交流自然發生而不壓迫日常。",
+    moods: "社交、安靜、共享、開放、舒適",
+  },
+  "自然材質庇護所": {
+    text: "透過木質、礦物塗料、織品與植栽等自然材質建立穩定而可觸摸的生活背景，讓空間成為身體與情緒都能放鬆的庇護場域。",
+    moods: "自然、觸感、庇護、溫潤、慢生活",
+  },
+  "品牌式生活場景": {
+    text: "以品牌敘事的方式整理生活場景，讓入口、展示、停留、交流與主視覺形成一致的空間識別，適合商業空間或重視形象的住宅提案。",
+    moods: "識別、場景、敘事、精準、記憶點",
+  },
+};
+
 function value(id) {
   return fields[id].value.trim();
 }
@@ -69,6 +114,7 @@ function projectBlock() {
 - Core concept: ${value("conceptTitle")}
 - Concept description: ${value("conceptText")}
 - Mood keywords: ${value("moodKeywords")}
+- Board tone: ${value("boardTone")}
 - Style direction: ${value("styleDirection")}
 - Material / color / lighting: ${value("materialLight")}
 - Source materials: ${value("sourceMaterials")}
@@ -113,7 +159,7 @@ Required layout:
 ${accuracyCore()}
 
 Visual style:
-professional architecture competition board, refined grid, generous white space, readable typography, warm modern interior proposal, elegant line diagrams, precise schematic drawings, high-end academic design board, calm but rigorous.
+professional architecture competition board, ${value("boardTone")}, refined grid, generous white space, readable typography, elegant line diagrams, precise schematic drawings, high-end design presentation, calm but rigorous.
 
 Avoid:
 moodboard, real estate poster, pure collage, unreadable tiny text, fake construction drawings, inconsistent plan/section/perspective.
@@ -320,8 +366,18 @@ sourceFilesInput.addEventListener("change", () => {
   generatePrompts();
 });
 
+fields.conceptPreset.addEventListener("change", () => {
+  const preset = conceptPresets[value("conceptPreset")];
+  if (preset) {
+    fields.conceptTitle.value = value("conceptPreset");
+    fields.conceptText.value = preset.text;
+    fields.moodKeywords.value = preset.moods;
+  }
+  generatePrompts();
+});
+
 Object.values(fields).forEach((field) => {
-  if (field.id === "materialLight" || field.id === "styleDirection") return;
+  if (field.id === "materialLight" || field.id === "styleDirection" || field.id === "conceptPreset") return;
   field.addEventListener("input", generatePrompts);
   field.addEventListener("change", generatePrompts);
 });

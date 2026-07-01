@@ -21,7 +21,7 @@
           <h2>1. 專案資料</h2>
           <label>
             案件名稱
-            <input id="projectName" value="學務處改造" />
+            <input id="projectName" value="都市慢生活住宅提案" />
           </label>
           <label>
             空間類型
@@ -32,7 +32,7 @@
               <option>住宅｜豪宅 / 高端住宅</option>
               <option>辦公｜接待大廳</option>
               <option>辦公｜開放辦公區</option>
-              <option selected>教育｜校園行政空間</option>
+              <option selected>住宅｜家庭宅</option>
               <option>教育｜圖書館 / 閱讀空間</option>
               <option>商業｜品牌門市</option>
               <option>商業｜展示空間</option>
@@ -46,7 +46,7 @@
           </label>
           <label>
             面積 / 坪數 / 尺度
-            <input id="area" value="約 32 坪" />
+            <input id="area" value="約 28 坪" />
           </label>
           <label>
             圖面比例 / 已知尺度
@@ -58,15 +58,15 @@
           <h2>2. 現場與需求</h2>
           <label>
             現場條件
-            <textarea id="siteCondition" rows="4">校園行政空間，入口與走廊交界明顯，現場具備既有牆面、展示資訊、玻璃界面與等候需求。</textarea>
+            <textarea id="siteCondition" rows="4">都市住宅，採光良好，但入口缺少轉換；公共區、收納與休息場景需要被重新整合。</textarea>
           </label>
           <label>
             現場問題 / 矛盾
-            <textarea id="siteIssues" rows="4">入口停留性不足、學生進入時缺少心理緩衝，資訊展示零散，等候與洽詢行為缺乏清楚的空間角色。</textarea>
+            <textarea id="siteIssues" rows="4">玄關收納不足，客餐廳視覺雜訊偏高，回家後缺少由外到內的情緒緩衝，閱讀、休息與招待朋友的場景界線不清。</textarea>
           </label>
           <label>
             使用者 / 行為目標
-            <textarea id="behaviorGoal" rows="3">學生進入、等待、洽詢、閱讀公告、短暫停留、與行政人員互動。</textarea>
+            <textarea id="behaviorGoal" rows="3">雙人家庭；需要回家、收納、休息、閱讀、簡單用餐、朋友來訪交流等情境能自然切換。</textarea>
           </label>
         </div>
 
@@ -90,15 +90,42 @@
           <h2>4. 核心概念</h2>
           <label>
             概念名稱
-            <input id="conceptTitle" value="落角於角落" />
+            <input id="conceptTitle" value="回家後慢慢降速" />
+          </label>
+          <label>
+            快速概念選擇
+            <select id="conceptPreset">
+              <option selected>回家後慢慢降速</option>
+              <option>都市避風港</option>
+              <option>柔和日常</option>
+              <option>光的停留</option>
+              <option>收納成為界面</option>
+              <option>轉角成場</option>
+              <option>家中的第二客廳</option>
+              <option>安靜的社交核心</option>
+              <option>自然材質庇護所</option>
+              <option>品牌式生活場景</option>
+            </select>
           </label>
           <label>
             概念描述
-            <textarea id="conceptText" rows="5">將原本只是通過的角落，轉化為能停留、等待、交流與辨識的柔性節點，讓學生在進入學務處前先完成心理上的轉換。</textarea>
+            <textarea id="conceptText" rows="5">為忙碌都市生活建立一個能沉澱、放鬆與重新聚焦的居住場域。空間不追求過度裝飾，而是透過柔和光線、溫潤材質與清楚動線，讓日常生活自然變慢。</textarea>
           </label>
           <label>
             情緒關鍵字
             <input id="moodKeywords" value="安定、柔和、低噪音、包覆感、溫潤" />
+          </label>
+          <label>
+            版面氣質
+            <select id="boardTone">
+              <option selected>溫潤留白｜住宅提案</option>
+              <option>高端精緻｜精品提案</option>
+              <option>清爽理性｜建築競圖</option>
+              <option>自然療癒｜慢生活</option>
+              <option>品牌敘事｜商業空間</option>
+              <option>學術分析｜概念研究</option>
+              <option>黑白極簡｜圖面導向</option>
+            </select>
           </label>
         </div>
 
